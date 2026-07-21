@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "server",
+    "scripts/verify-ffmpeg-distribution.ts",
+    "apps/opencut-editor/src/canonical-timeline-codec.ts",
+    "apps/opencut-editor/src/render-semantic-plan.ts",
+    "apps/opencut-editor/src/timeline-media-policy.ts",
+    "apps/opencut-editor/src/canonical-timeline-codec.ts",
+    "apps/opencut-editor/src/contracts.ts",
+    "apps/opencut-editor/src/opencut-atomic-edit.ts",
+    "apps/opencut-editor/src/opencut-command-editor.ts",
+    "apps/opencut-editor/src/opencut-pinned-provenance.ts",
+    "apps/opencut-editor/src/opencut-timeline-engine.ts",
+    "apps/opencut-editor/src/render-semantic-plan.ts",
+    "apps/opencut-editor/src/timeline-media-policy.ts",
+    "third_party/OpenCut-Classic/src/animation/**/*.ts",
+    "third_party/OpenCut-Classic/src/commands/**/*.ts",
+    "third_party/OpenCut-Classic/src/core/**/*.ts",
+    "third_party/OpenCut-Classic/src/ports/**/*.ts",
+    "third_party/OpenCut-Classic/src/retime/**/*.ts",
+    "third_party/OpenCut-Classic/src/ripple/**/*.ts",
+    "third_party/OpenCut-Classic/src/timeline/**/*.ts",
+    "third_party/OpenCut-Classic/src/utils/**/*.ts"
+  ],
+  "exclude": [
+    "apps/opencut-editor/src/**/*.test.ts",
+    "third_party/OpenCut-Classic/src/**/*.test.ts"
+  ]
+}

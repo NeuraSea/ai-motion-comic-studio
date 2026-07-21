@@ -1,0 +1,28 @@
+{
+  "name": "@manju/opencut-classic-extract",
+  "version": "0.0.0-cf5e79e",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./commands/base-command": "./src/commands/base-command.ts",
+    "./commands/timeline/element/delete-elements": "./src/commands/timeline/element/delete-elements.ts",
+    "./commands/timeline/element/insert-element": "./src/commands/timeline/element/insert-element.ts",
+    "./commands/timeline/element/move-elements": "./src/commands/timeline/element/move-elements.ts",
+    "./commands/timeline/element/split-elements": "./src/commands/timeline/element/split-elements.ts",
+    "./commands/timeline/element/update-elements": "./src/commands/timeline/element/update-elements.ts",
+    "./commands/timeline/track/add-track": "./src/commands/timeline/track/add-track.ts",
+    "./core/managers/commands": "./src/core/managers/commands.ts",
+    "./timeline/placement/compatibility": "./src/timeline/placement/compatibility.ts",
+    "./timeline/placement/apply": "./src/timeline/placement/apply.ts",
+    "./timeline/placement/overlap": "./src/timeline/placement/overlap.ts",
+    "./timeline/placement/resolve": "./src/timeline/placement/resolve.ts",
+    "./timeline/group-move/build-group": "./src/timeline/group-move/build-group.ts",
+    "./timeline/group-move/resolve-move": "./src/timeline/group-move/resolve-move.ts",
+    "./timeline/group-resize/build-members": "./src/timeline/group-resize/build-members.ts",
+    "./timeline/group-resize/compute-resize": "./src/timeline/group-resize/compute-resize.ts",
+    "./timeline/snapping/build": "./src/timeline/snapping/build.ts",
+    "./timeline/snapping/resolve": "./src/timeline/snapping/resolve.ts",
+    "./timeline/snapping/threshold": "./src/timeline/snapping/threshold.ts"
+  }
+}

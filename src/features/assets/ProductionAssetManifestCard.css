@@ -1,0 +1,65 @@
+.production-manifest-card {
+  display: grid;
+  gap: 10px;
+  margin: 12px 20px;
+  padding: 13px 14px;
+  border: 1px solid #343b3f;
+  border-radius: 12px;
+  background: #111619;
+}
+
+.production-manifest-card.current { border-color: rgba(79, 151, 104, .55); background: rgba(24, 50, 35, .26); }
+.production-manifest-card.changed,
+.production-manifest-card.missing { border-color: rgba(247, 139, 65, .5); background: rgba(69, 39, 23, .22); }
+.production-manifest-card.blocked { border-color: rgba(189, 91, 78, .5); background: rgba(70, 30, 29, .22); }
+
+.production-manifest-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #f18a45;
+}
+
+.production-manifest-card.current .production-manifest-heading { color: #72bd89; }
+.production-manifest-card.blocked .production-manifest-heading { color: #d9786b; }
+.production-manifest-heading > div { display: grid; gap: 2px; }
+.production-manifest-heading strong { color: #e7e3dc; font-size: 11px; }
+.production-manifest-heading span { color: #9ba3a6; font-size: 8px; }
+
+.production-manifest-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  color: #899296;
+  font-size: 8px;
+}
+
+.production-manifest-metrics span {
+  padding: 5px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .035);
+}
+.production-manifest-metrics span:last-child { flex: 1 1 360px; line-height: 1.45; }
+.production-manifest-metrics b { color: #d8d5cf; font-size: 10px; }
+
+.production-manifest-blockers {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 8px 10px 8px 24px;
+  border-radius: 7px;
+  color: #d49b91;
+  background: rgba(102, 42, 37, .2);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.production-manifest-error { margin: 0; color: #e08a7d; font-size: 8px; }
+.production-manifest-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.production-manifest-actions button { display: inline-flex; align-items: center; gap: 5px; }
+
+@media (max-width: 760px) {
+  .production-manifest-card { margin: 8px 10px; }
+  .production-manifest-actions { justify-content: stretch; }
+  .production-manifest-actions button { flex: 1; justify-content: center; }
+}

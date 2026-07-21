@@ -1,0 +1,158 @@
+.managed-subtitle-editor {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #30383d;
+  border-radius: 7px;
+  background: #111618;
+}
+
+.managed-subtitle-editor > header,
+.managed-subtitle-source,
+.managed-subtitle-editor > footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.managed-subtitle-editor > header {
+  min-height: 55px;
+  padding: 10px 13px;
+  border-bottom: 1px solid #2b3236;
+  background: #151b1e;
+}
+
+.managed-subtitle-editor > header > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.managed-subtitle-editor > header strong { color: #c5ccca; font-size: 12px; }
+.managed-subtitle-editor > header small { color: #738087; font-size: 10px; line-height: 1.4; }
+
+.managed-subtitle-state {
+  display: inline-flex;
+  min-height: 25px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid #364047;
+  border-radius: 999px;
+  color: #8d999e;
+  font-size: 10px;
+}
+
+.managed-subtitle-state.state-saved { border-color: rgba(71, 143, 107, .45); color: #7fb595; }
+.managed-subtitle-state.state-dirty { border-color: rgba(193, 132, 73, .42); color: #d09b68; }
+.managed-subtitle-state.state-stale { border-color: rgba(169, 90, 70, .48); color: #d38976; }
+
+.managed-subtitle-source {
+  padding: 9px 13px;
+  border-bottom: 1px solid #293035;
+  background: #101517;
+}
+
+.managed-subtitle-source > div { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.managed-subtitle-source span { color: #7b878d; font-size: 10px; }
+.managed-subtitle-source span strong { color: #adb6b7; font-family: var(--mono); font-weight: 500; }
+.managed-subtitle-source .button { min-height: 28px; padding: 5px 8px; font-size: 10px; }
+
+.managed-subtitle-cues {
+  max-height: 290px;
+  overflow: auto;
+  padding: 8px 13px 10px;
+}
+
+.managed-subtitle-cue {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(180px, 1fr) 100px 100px 30px;
+  align-items: center;
+  gap: 7px;
+  min-width: 590px;
+  padding: 4px 0;
+}
+
+.managed-subtitle-cue.heading {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 3px 0 6px;
+  background: #111618;
+  color: #6f7a80;
+  font-size: 9px;
+}
+
+.managed-subtitle-cue > span:first-child { color: #667178; font-family: var(--mono); font-size: 9px; text-align: center; }
+.managed-subtitle-cue input {
+  width: 100%;
+  min-width: 0;
+  height: 31px;
+  padding: 5px 7px;
+  border: 1px solid #343d42;
+  border-radius: 4px;
+  outline: none;
+  background: #0b0f11;
+  color: #bdc5c4;
+  font-size: 11px;
+}
+.managed-subtitle-cue input:focus { border-color: #6c8f84; box-shadow: 0 0 0 2px rgba(74, 118, 105, .14); }
+.managed-subtitle-cue.invalid input { border-color: rgba(164, 82, 67, .65); }
+.managed-subtitle-cue > button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #778187;
+}
+.managed-subtitle-cue > button:hover { background: rgba(145, 75, 61, .16); color: #c98575; }
+.managed-subtitle-cue > small {
+  grid-column: 2 / 5;
+  color: #c17c6b;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.managed-subtitle-editor > footer {
+  padding: 9px 13px 11px;
+  border-top: 1px solid #293035;
+}
+.managed-subtitle-editor > footer > div { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.managed-subtitle-editor > footer span { max-width: 360px; color: #bd806d; font-size: 9px; text-align: right; }
+.managed-subtitle-editor > footer .button { min-height: 31px; padding: 6px 10px; font-size: 10px; }
+
+.managed-subtitle-empty {
+  padding: 24px 14px;
+  color: #748087;
+  font-size: 11px;
+  text-align: center;
+}
+.managed-subtitle-empty.compact { padding: 14px; }
+
+.managed-subtitle-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 8px 13px;
+  padding: 8px 9px;
+  border: 1px solid rgba(164, 91, 70, .35);
+  border-radius: 5px;
+  background: rgba(80, 42, 32, .14);
+  color: #c58d7d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.managed-subtitle-warning svg { flex: 0 0 auto; }
+
+@media (max-width: 760px) {
+  .managed-subtitle-source,
+  .managed-subtitle-editor > footer { align-items: flex-start; flex-direction: column; }
+  .managed-subtitle-editor > footer > div { width: 100%; justify-content: space-between; }
+}

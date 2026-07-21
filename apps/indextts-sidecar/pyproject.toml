@@ -1,0 +1,29 @@
+[project]
+name = "manju-indextts-sidecar"
+version = "0.2.0"
+description = "Authenticated MLX-first IndexTTS2 inference sidecar for Manju Studio"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.32,<1",
+]
+
+[project.optional-dependencies]
+mlx = [
+  "mlx-indextts[v2]>=0.1.0,<0.2",
+  # mlx-indextts 0.1.0 leaves the scientific stack open-ended. These bounds
+  # avoid resolving an obsolete numba/llvmlite pair or a too-new NumPy.
+  "numpy>=1.26,<2.3",
+  "numba>=0.61.2,<0.62",
+  "llvmlite>=0.44,<0.45",
+  "torch==2.11.0",
+  "torchaudio==2.11.0",
+  "transformers>=4.40,<5",
+]
+test = [
+  "httpx>=0.28,<1",
+  "pytest>=8,<9",
+]
+
+[tool.uv]
+package = false

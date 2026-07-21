@@ -1,0 +1,671 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/OpenCut-app/OpenCut-Classic.git",
+    "commit": "cf5e79e919144200294fb9fed22a222592a0aeea",
+    "license": "MIT"
+  },
+  "schemaSources": [
+    {
+      "upstreamPath": "apps/web/src/timeline/types.ts",
+      "upstreamSha256": "9ed9fbd54de1a9c7b27a98f833db712ee32dd0106c73a87be5ed466def8958ac",
+      "consumer": "apps/opencut-editor/src/canonical-timeline-codec.ts",
+      "policy": "Pinned discriminated unions encoded as lossless JSON; browser-only AudioBuffer and Date values are excluded from timeline persistence"
+    }
+  ],
+  "files": [
+    {
+      "localPath": "src/timeline/scale.ts",
+      "upstreamPath": "apps/web/src/timeline/scale.ts",
+      "upstreamSha256": "ba001bea8ad3331a446615328689db3c5a47ff7a9897ab7fa0ad696ea1c0b519",
+      "localSha256": "ba001bea8ad3331a446615328689db3c5a47ff7a9897ab7fa0ad696ea1c0b519",
+      "patches": []
+    },
+    {
+      "localPath": "src/timeline/components/interaction.ts",
+      "upstreamPath": "apps/web/src/timeline/components/interaction.ts",
+      "upstreamSha256": "0dafdb8dcffbbfe980a50438defc7a4589c4d08ab2e97caeb18e1f5b10fea604",
+      "localSha256": "0dafdb8dcffbbfe980a50438defc7a4589c4d08ab2e97caeb18e1f5b10fea604",
+      "patches": []
+    },
+    {
+      "localPath": "src/timeline/pixel-utils.ts",
+      "upstreamPath": "apps/web/src/timeline/pixel-utils.ts",
+      "upstreamSha256": "373bcd4b0d9fd88da7cffb05bd3ea3368c8aabcb13f275147cfceb59e70eaef0",
+      "localSha256": "bc2575d2629cd811bd5f48e572b09618cb3ac6fff2e61c6392cc54d3fdc2c06f",
+      "patches": [
+        "@/timeline/scale -> ./scale",
+        "@/wasm -> ../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/zoom-utils.ts",
+      "upstreamPath": "apps/web/src/timeline/zoom-utils.ts",
+      "upstreamSha256": "00d105f58146956d915b4614ee1796a73513ff786bed90dd07d1245ee2fb84b6",
+      "localSha256": "6d5495d9bc6a930c4eccc90f4906ef53fbdcb77ae0278b4c34764a0020db6ea4",
+      "patches": [
+        "@/timeline/scale -> ./scale",
+        "@/wasm -> ../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/controllers/seek-controller.ts",
+      "upstreamPath": "apps/web/src/timeline/controllers/seek-controller.ts",
+      "upstreamSha256": "20aaa1806bd0d134eda3243f06b33737f3b6e143d6af717f6b5c391dc83d4d25",
+      "localSha256": "14cf524bf791ded2b859391266a9b38cabde1d404eaa745b332480f92a910867",
+      "patches": [
+        "React MouseEvent -> ../../ports/browser-events structural port",
+        "opencut-wasm FrameRate and @/wasm -> ../../ports/media-time",
+        "@/timeline/scale -> ../scale"
+      ]
+    },
+    {
+      "localPath": "src/timeline/controllers/zoom-controller.ts",
+      "upstreamPath": "apps/web/src/timeline/controllers/zoom-controller.ts",
+      "upstreamSha256": "508e6eab765bc5ada477fafc9d66e90df0b82c5209f6d77272fc0b20db5ae611",
+      "localSha256": "7ed98a320d10989568a4a11702908b35264a8e05958eab55aef8b2e7d1c25a12",
+      "patches": [
+        "React WheelEvent -> ../../ports/browser-events structural port",
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/controllers/element-interaction-controller.ts",
+      "upstreamPath": "apps/web/src/timeline/controllers/element-interaction-controller.ts",
+      "upstreamSha256": "37e522b8414a234f0e4f08975cd19eab9576caefb86b631c3f04e6f2325bae5b",
+      "localSha256": "c106ddd008db0a6a645f33c610b13a2cb70ebf1581c17d366f5691ee4040feda",
+      "patches": [
+        "React MouseEvent -> ../../ports/browser-events structural port",
+        "opencut-wasm FrameRate and @/wasm -> ../../ports/media-time",
+        "application aliases/barrels -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/controllers/resize-controller.ts",
+      "upstreamPath": "apps/web/src/timeline/controllers/resize-controller.ts",
+      "upstreamSha256": "5df364cd82a2f8368a8e50fadbf3f73d1bb283a99f9b2b54919b2adb0be6fea6",
+      "localSha256": "c22bb80416fba37d522fbbd10ccb055b0c748dce128c42c596f8bf4bd8d02cc3",
+      "patches": [
+        "React MouseEvent -> ../../ports/browser-events structural port",
+        "opencut-wasm FrameRate and @/wasm -> ../../ports/media-time",
+        "application aliases/barrels -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/components/drop-target.ts",
+      "upstreamPath": "apps/web/src/timeline/components/drop-target.ts",
+      "upstreamSha256": "d07091a5c38386a15afa5c3adacaac64cb52c9295896390b8150116ad2bd920d",
+      "localSha256": "a63b5a8cfed2e6707942279fb2a5bff018825c52544a8146d21b7620c6d7530f",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/components/layout.ts",
+      "upstreamPath": "apps/web/src/timeline/components/layout.ts",
+      "upstreamSha256": "33b4999a1cc6bd7e44641fcf843badec13de42c7b9256876f5f6baac7fa1fb70",
+      "localSha256": "4eaebdf11cdd1838f234ffda1517f96efbf0f571f42ba3dd452f61c759a74e21",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/components/track-layout.ts",
+      "upstreamPath": "apps/web/src/timeline/components/track-layout.ts",
+      "upstreamSha256": "ec23a0d64b9c4d910f891cec868aebe0127aea32336b8d7e839e32369736d9a3",
+      "localSha256": "0b850ef68e4accda75a40ee40cf63f6a46b5e2d993503c358a5229eef7262241",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/drag-utils.ts",
+      "upstreamPath": "apps/web/src/timeline/drag-utils.ts",
+      "upstreamSha256": "a828e600a8fb32161d897b9a1ed960868a839bacc8ce338979a4f28b7b4b2a3d",
+      "localSha256": "57f8cf2374afb5c25898f7bb9762648fe8cbbf544dc3efe97182859b63708a95",
+      "patches": [
+        "@/timeline/scale -> ./scale",
+        "@/wasm -> ../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/element-snap-source.ts",
+      "upstreamPath": "apps/web/src/timeline/element-snap-source.ts",
+      "upstreamSha256": "d8a789e33330be3d3aa72df50f1511059a9941bce692903c50ce713c8f1ba784",
+      "localSha256": "1561a6ff936f442a7e0f08b4eeaaf07729f3d56b616c3fa149d4262b6e0489d3",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/playhead-snap-source.ts",
+      "upstreamPath": "apps/web/src/timeline/playhead-snap-source.ts",
+      "upstreamSha256": "79d167c52ed3a3e8c0ff005945e07504820054013b47160ae6bde9817f9c5081",
+      "localSha256": "ffd2b1ca21ac138465ee78d49e16408dc8af721fd1f785233c1effdb095f2f7b",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/animation-snap-points.ts",
+      "upstreamPath": "apps/web/src/timeline/animation-snap-points.ts",
+      "upstreamSha256": "9664b10901e4dfdf5ea7ed4a6324b743bf5f1b4ae566a06e8bfa93c7c8ef0144",
+      "localSha256": "ed5dc9f1f8ddef660a09aae00e50ae7daf94dd17cbec027dc836c312f1f5ccca",
+      "patches": [
+        "application aliases/barrels -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-move/snap.ts",
+      "upstreamPath": "apps/web/src/timeline/group-move/snap.ts",
+      "upstreamSha256": "fe9bc3fed428deba33e25c94aca2d84edff0e7a5ebfa66c254a70521e7b6a88a",
+      "localSha256": "0331584292a503abf3312838397fa414ef82be34d7337d19c8cadd1ae86bcc7a",
+      "patches": [
+        "application aliases/barrels -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/animation/keyframe-query.ts",
+      "upstreamPath": "apps/web/src/animation/keyframe-query.ts",
+      "upstreamSha256": "9772306e409f93e24d347292063ae78a3de03f0dec511c867441b63309704b6c",
+      "localSha256": "37389bfc03b7fb50c1e96ac0c27491547e2df64660530e5bdc2292f733831567",
+      "patches": [
+        "@/animation/types -> ./types",
+        "@/params -> ../ports/params"
+      ]
+    },
+    {
+      "localPath": "src/ports/params.ts",
+      "upstreamPath": "apps/web/src/params/index.ts",
+      "upstreamSha256": "94ef2a3c256d4194c9aaaaf982330de14d3789dcbd6afb6389d8d6a3123500d7",
+      "localSha256": "d4d6582cb5334545780aa8f54f535a5e1388f3f4bb33c61184c4abce74041c3b",
+      "patches": [
+        "narrow extracted ParamValue/channel-layout type surface",
+        "retained exact linearToSrgb and formatLinearRgba implementation",
+        "@/utils/math -> ../utils/math"
+      ]
+    },
+    {
+      "localPath": "src/animation/path.ts",
+      "upstreamPath": "apps/web/src/animation/path.ts",
+      "upstreamSha256": "04bd4053a0fcd85a460418f845e29711893e682d22395a1bd78987fc6b550632",
+      "localSha256": "09eb22029db62afb822e7f6863c9068f86eb29efbfd574893888859baf33aefa",
+      "patches": [
+        "@/animation/types -> ./types",
+        "graphic/effect predicate imports -> ../ports/animation-param-path"
+      ]
+    },
+    {
+      "localPath": "src/timeline/layout-width.ts",
+      "upstreamPath": "apps/web/src/timeline/components/index.tsx",
+      "upstreamSha256": "21e0b4fcf81038c5aa1a4e22c0adc78996f90c38370c6f2f6446e9bc4799c3b3",
+      "localSha256": "655c6b37262513318afdf49097ffd6773028fc2b60f9cc7c2ef4189148bf6fa5",
+      "patches": [
+        "extracted the contentWidth/paddingPx/dynamicTimelineWidth pure layout policy",
+        "application aliases -> relative extracted modules"
+      ]
+    },
+    {
+      "localPath": "src/timeline/snapping/types.ts",
+      "upstreamPath": "apps/web/src/timeline/snapping/types.ts",
+      "upstreamSha256": "a7989b43f69369265e2f147dd04d2fe4a007eccee361d527037023083dd0ff6e",
+      "localSha256": "6a8d6cc6357535125e18c368cc038b609498ea852133f2cef94bdc8815f38d6d",
+      "patches": [
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/snapping/resolve.ts",
+      "upstreamPath": "apps/web/src/timeline/snapping/resolve.ts",
+      "upstreamSha256": "73f7865940cd914b09070ca3daa03325b03a31bd33ebb6766dc0975736c6fc0d",
+      "localSha256": "ca2ef54fe24dc3c5498f4712dec1b125b17b9819b7cf76454a2952769250bb3a",
+      "patches": [
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/snapping/build.ts",
+      "upstreamPath": "apps/web/src/timeline/snapping/build.ts",
+      "upstreamSha256": "7cf9b8dc203a691af38e99d16ceb401cb881055b93244f9f6afa65338ef46e1a",
+      "localSha256": "7cf9b8dc203a691af38e99d16ceb401cb881055b93244f9f6afa65338ef46e1a",
+      "patches": []
+    },
+    {
+      "localPath": "src/timeline/snapping/threshold.ts",
+      "upstreamPath": "apps/web/src/timeline/snapping/threshold.ts",
+      "upstreamSha256": "951ed0604bcd5960384a520a14cf66f554c2580f4e0098e0307939db73ced686",
+      "localSha256": "17c16f3d25aee8cf216f2bc573c1db64cf6052d0466822f4b87fce2c4e765c21",
+      "patches": [
+        "@/timeline/scale -> ../scale",
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/types.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/types.ts",
+      "upstreamSha256": "82637970fd8bb4ea136b3995c29c72ab4bce16f2d55c9fb7c2bb8389643aa227",
+      "localSha256": "577a11f6e5099f94cadd7a8903200e5dd651e0c84e5612a6c6e542bdf6315149",
+      "patches": [
+        "@/timeline -> ../../ports/timeline",
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/compatibility.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/compatibility.ts",
+      "upstreamSha256": "2629336b2ae576e0438a59359a44178283812d6b6eb4fa9964ffd3f3f5e06ec5",
+      "localSha256": "b3a9acad147276dddf8f727748e23ba76c07121f10d9ce3cbcd8069ffc9a7e92",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/overlap.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/overlap.ts",
+      "upstreamSha256": "0ed2ec979ea29d56a2dbbc3f456a8e4bee0850eddb342ad9dbaa6742c16d0001",
+      "localSha256": "dd0f471c442c3a468552c2634f3d974c70c4867b6c0641561afab1cbf97895d1",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/insert-index.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/insert-index.ts",
+      "upstreamSha256": "f4d610da8b9e184670e56d0f8026ed7e01be97ff6a402d15e17e48eb5c997b05",
+      "localSha256": "d744fbc8aa302e1e6107d40f010bab8f4fc242bc521751bc2da5d941ad0bde21",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/main-track.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/main-track.ts",
+      "upstreamSha256": "00ac00f2f419dd203b49ec755979aacd11d99fbe71a6a47f96e6116ad5d2d345",
+      "localSha256": "9781202a255a6d914903a0e6198e6536bb98863c6ce12f2b9189fe01d29fb81b",
+      "patches": [
+        "@/timeline -> ../../ports/timeline",
+        "@/wasm -> ../../ports/media-time",
+        "reformatted touched imports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/resolve.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/resolve.ts",
+      "upstreamSha256": "f377b534e8d6a3555543f47e0d71cd098e718a10459dd5587a90678142ffd70f",
+      "localSha256": "812c4aa7fd3c413d569bd2c8b75c077f02a33fb9968686ae41b0dada45aed6c9",
+      "patches": [
+        "@/timeline -> ../../ports/timeline",
+        "@/wasm -> ../../ports/media-time",
+        "reformatted touched imports"
+      ]
+    },
+    {
+      "localPath": "src/animation/bezier.ts",
+      "upstreamPath": "apps/web/src/animation/bezier.ts",
+      "upstreamSha256": "47a241965828c44ae10634ced94919801b90e812eb2d90b130441a1630c022ac",
+      "localSha256": "7c27f6b6eab5923903b3a71dacd92cb44244192477c259a6274a7c9ebdc7ea40",
+      "patches": [
+        "@/animation/types -> ./types"
+      ]
+    },
+    {
+      "localPath": "src/animation/channel-data.ts",
+      "upstreamPath": "apps/web/src/animation/channel-data.ts",
+      "upstreamSha256": "c47eb1efae64eff665a2aa576f4cd2a6b3503b9dca58133b7a5d9b04e8c1209c",
+      "localSha256": "66a73e9243bbe44efadd1d22e4565384c431b164b23b905e6b0449f87287f412",
+      "patches": [
+        "@/animation/types -> ./types"
+      ]
+    },
+    {
+      "localPath": "src/animation/interpolation.ts",
+      "upstreamPath": "apps/web/src/animation/interpolation.ts",
+      "upstreamSha256": "20ca806fd989299c94b184b3c71889ee1c524667c55b0e2df42bedde0d391882",
+      "localSha256": "e096ca40431932c68afc88ac16e7d24e44934894cd8797759b9b703cc3fbcf13",
+      "patches": [
+        "@/animation/types -> ./types",
+        "@/params -> ../ports/params",
+        "@/wasm -> ../ports/media-time",
+        "@/utils/math -> ../utils/math"
+      ]
+    },
+    {
+      "localPath": "src/animation/keyframes.ts",
+      "upstreamPath": "apps/web/src/animation/keyframes.ts",
+      "upstreamSha256": "703a30219a3d079b93ac7eae8659da82b35a5386fb6a000cbae944c8bf2f1d93",
+      "localSha256": "8489f278e5610767fe14bba423cee57e1d5c74380a6a35116e667a4262259abd",
+      "patches": [
+        "@/animation/types -> ./types",
+        "@/params -> ../ports/params",
+        "@/wasm -> ../ports/media-time",
+        "@/utils/id -> ../utils/id"
+      ]
+    },
+    {
+      "localPath": "src/animation/types.ts",
+      "upstreamPath": "apps/web/src/animation/types.ts",
+      "upstreamSha256": "266932acec2a28074ee2de9dedb64ff79d6fac48b96752cb498554dcd5695d94",
+      "localSha256": "b1e0c91fa3701b2a9d4abe07921d1d346d3878340f8e024d7903ea55a7452ea0",
+      "patches": [
+        "@/wasm -> ../ports/media-time",
+        "@/params -> ../ports/params"
+      ]
+    },
+    {
+      "localPath": "src/commands/base-command.ts",
+      "upstreamPath": "apps/web/src/commands/base-command.ts",
+      "upstreamSha256": "1681d4484f133fcfa48cd3b96942687d0aa4195463103d0eff1993308d3f62ad",
+      "localSha256": "43d60a083c79bcc30f8eab2694b2229ca7fe98903f0fa79ff3afdfae20b85ab8",
+      "patches": [
+        "@/selection/editor-selection -> ../ports/selection",
+        "@/timeline/types -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/element/insert-element.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/element/insert-element.ts",
+      "upstreamSha256": "3e4943a2b91d4603d862e65455233812394b99d22a0acc099ec66b8a3acb9499",
+      "localSha256": "29ab2b9ccfc0bc32e2ca0764b4bdf1606cb522561c3f08917ec0004d6635c2e0",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports",
+        "UI-neutral command boundary requires canonical duration/trim fields instead of applying application defaults",
+        "browser media-registry canvas/FPS side effects omitted; timeline placement, automatic track creation, element identity, and selection semantics retained",
+        "graphic definitions are validated by required non-empty definitionId rather than importing the application graphics registry",
+        "diagnostic console output omitted from the command adapter"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/element/delete-elements.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/element/delete-elements.ts",
+      "upstreamSha256": "cefadf86213b72315d59fcd914cdba98a058b17400aea3977b1b19de08690a5b",
+      "localSha256": "78554a4b685332d4b4e88f262e906a8de2180abc89792057932dfc4fbf211cf7",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/element/move-elements.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/element/move-elements.ts",
+      "upstreamSha256": "054f27fa221a8cbd3a08042c3cb682be02ad09cb2e9109e3d078b244aa9c7aea",
+      "localSha256": "9196bce78f326cc0ab5f311d862258c48818333b456e406d770a7846862e3baf",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/element/split-elements.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/element/split-elements.ts",
+      "upstreamSha256": "eb1a9458b79afb8611a0ef5dca3fc43224f9d6227f99dd1c547bf609e6cd8f5e",
+      "localSha256": "b49d32b6f61982bf0bb89fe713a2a51fc41e59c7e19916da60ccb89d9d75f733",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/element/update-elements.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/element/update-elements.ts",
+      "upstreamSha256": "c1827c5477649a96cc9912cac05615407cb0f8b2cfb1003c14ac2d6131d0bf81",
+      "localSha256": "1a31fc89e8746149a1fb06f5f6063a3af9c345e0b5cd36fc4abe1e2cbf3988e5",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/commands/timeline/track/add-track.ts",
+      "upstreamPath": "apps/web/src/commands/timeline/track/add-track.ts",
+      "upstreamSha256": "0110b4dc260f46d1c6971d37c72ebff28bdabd2feea8709010c273ab70721917",
+      "localSha256": "51b742a0a3c5dc13509f5a43840b74fad501d063ccd47278337da1f787a32c9b",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/core/managers/commands.ts",
+      "upstreamPath": "apps/web/src/core/managers/commands.ts",
+      "upstreamSha256": "af72cecec9dcac10ee30057bbe550bb40d75ef128107a018f1ce8f1bcfc65373",
+      "localSha256": "46ec7b737320816d51dde392d1b17cf314862b07eeec67cdbd14f363a69d0d8e",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports",
+        "@/ripple barrel -> direct apply and diff modules"
+      ]
+    },
+    {
+      "localPath": "src/core/managers/playback-manager.ts",
+      "upstreamPath": "apps/web/src/core/managers/playback-manager.ts",
+      "upstreamSha256": "64024433fff85e99cbc84322cdf09b9d7f44b95f3765aa24f260df43471ae72b",
+      "localSha256": "70d872d6c2983b296395388d8b351f37efaab14fd2bdd3b61c8bd2db53f10738",
+      "patches": [
+        "@/core -> ../../ports/editor-core",
+        "@/wasm -> ../../ports/media-time",
+        "normalized the upstream end-of-playback indentation"
+      ]
+    },
+    {
+      "localPath": "src/ports/selection.ts",
+      "upstreamPath": "apps/web/src/selection/editor-selection.ts",
+      "upstreamSha256": "a8a5c96ad16255964f23a1ca5e732b3b37920523a1b17fb14c88ced586fb4ae4",
+      "localSha256": "8ff86520b1a99f5e7b9d62668a7216616dde04ba0411d8b33e4c65189508fc63",
+      "patches": [
+        "@/animation/types -> ../animation/types",
+        "@/timeline/types -> ./timeline"
+      ]
+    },
+    {
+      "localPath": "src/retime/rate.ts",
+      "upstreamPath": "apps/web/src/retime/rate.ts",
+      "upstreamSha256": "05582e0add4c0e084ca04aa9387bb2d27f371d4a9b70513b2ee03073f23937e1",
+      "localSha256": "05582e0add4c0e084ca04aa9387bb2d27f371d4a9b70513b2ee03073f23937e1",
+      "patches": []
+    },
+    {
+      "localPath": "src/retime/resolve.ts",
+      "upstreamPath": "apps/web/src/retime/resolve.ts",
+      "upstreamSha256": "ca8858a91b645f0d47581c0ef093e3b94b9aced4897fd56b16a3f33e0d978cac",
+      "localSha256": "70f4d266fcf9a9db778930f592f71fdb126690d90502bda8823bab1a06eb3899",
+      "patches": [
+        "@/timeline -> ../ports/timeline",
+        "@/retime/rate -> ./rate"
+      ]
+    },
+    {
+      "localPath": "src/retime/split.ts",
+      "upstreamPath": "apps/web/src/retime/split.ts",
+      "upstreamSha256": "310f09e97263853575350fc7cfd34e43dba90a0323b1ac133579683aa894d536",
+      "localSha256": "ca177a321e4b8361a877dfff4fc8d760a1e72d776605d65ccda24c0d33102e19",
+      "patches": [
+        "@/timeline -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/ripple/apply.ts",
+      "upstreamPath": "apps/web/src/ripple/apply.ts",
+      "upstreamSha256": "d3cb81af1520bd813a2d292105746b8c2c539aed08478093e0d04955c2cc5446",
+      "localSha256": "ea8b02030ede7c454e20ebf3102c64c7015193ce58dacd1a72a5f0aa04ee58bc",
+      "patches": [
+        "@/timeline/types -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/ripple/diff.ts",
+      "upstreamPath": "apps/web/src/ripple/diff.ts",
+      "upstreamSha256": "8fcdd474e6dd0d93a1aaf0d0dfbe7519fd0faae5d1bfc8966fd1e965dc2fdfcc",
+      "localSha256": "4a654c3b6e2c6faf866ce9a85636c24a6cd587a339e442ad7a4bc404c895c29e",
+      "patches": [
+        "@/timeline/types -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/ripple/shift.ts",
+      "upstreamPath": "apps/web/src/ripple/shift.ts",
+      "upstreamSha256": "2648c4ea38ac51ece842656670e167623132f0aa7a5a4c8bec14a254a48528f5",
+      "localSha256": "b7226eae1dcd60d62c669fa7354280214d6cd8fc6670017cda12e3e0e1d690a3",
+      "patches": [
+        "@/timeline/types -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-move/build-group.ts",
+      "upstreamPath": "apps/web/src/timeline/group-move/build-group.ts",
+      "upstreamSha256": "5fb71e4a41be149f85a71c7da838ae195273c44c644d80992b53420c8e7bbb58",
+      "localSha256": "1bab5a5403172c7a04a07aa452676db716d58642d14277d203495e18038cbf16",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-move/resolve-move.ts",
+      "upstreamPath": "apps/web/src/timeline/group-move/resolve-move.ts",
+      "upstreamSha256": "07d195708d07df3792417c03363e4e31d4f7ecaa561cf8d4deaaf25be78a304f",
+      "localSha256": "2d3c6e612655756193378a3503fc69bd46aa4efa7fa2f4c888d5d85f845bd69e",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-move/track-placement.ts",
+      "upstreamPath": "apps/web/src/timeline/group-move/track-placement.ts",
+      "upstreamSha256": "e8b4a0a2d3de5c1d80ead54aa659822d4028d15388f97bac037086fd9fdfc0be",
+      "localSha256": "67ce80e6d4b99df292239961e8681dfd1c7b8cc8f92b1d775461c02c69d9a560",
+      "patches": [
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-move/types.ts",
+      "upstreamPath": "apps/web/src/timeline/group-move/types.ts",
+      "upstreamSha256": "e93d30c22fc91f51bbca112c5bab991182a47048325a587cbeb853174156157c",
+      "localSha256": "e5cc4e45ff7b29c345f67f43f9a0d2092863e742d2e568a150559caa3938f5f4",
+      "patches": [
+        "@/timeline -> ../../ports/timeline",
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-resize/build-members.ts",
+      "upstreamPath": "apps/web/src/timeline/controllers/resize-controller.ts",
+      "upstreamSha256": "5df364cd82a2f8368a8e50fadbf3f73d1bb283a99f9b2b54919b2adb0be6fea6",
+      "localSha256": "6558bbd6c8b8cf6cf6edabe0c278d83fbb1dd56733fe4f220e80018342098599",
+      "patches": [
+        "extracted buildResizeMembers and hasResizeChanges pure helpers only",
+        "application aliases -> relative extracted modules and compatibility ports",
+        "made hasResizeChanges export for the UI-neutral adapter"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-resize/compute-resize.ts",
+      "upstreamPath": "apps/web/src/timeline/group-resize/compute-resize.ts",
+      "upstreamSha256": "efe061a73f7e70637f7eed26e25f7d4af3cc36695e60dab088680b4743fa2e45",
+      "localSha256": "3882d07ae4ab56027bd1544543017090aac7712edb0f7de5de31b8b37d16fd99",
+      "patches": [
+        "@/retime -> ../../retime/resize",
+        "@/wasm -> ../../ports/media-time"
+      ]
+    },
+    {
+      "localPath": "src/timeline/group-resize/types.ts",
+      "upstreamPath": "apps/web/src/timeline/group-resize/types.ts",
+      "upstreamSha256": "2f43ddcaf7e4e59cddd35684803efb71ef773aa915e6fc777792bc4d0db1ba78",
+      "localSha256": "2c1265db1ac63f4a0d83316852a761674fb9fa485a93ef843c5c5b68dcc6d87b",
+      "patches": [
+        "opencut-wasm FrameRate and @/wasm MediaTime -> ../../ports/media-time",
+        "@/timeline/types -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/is-retimable.ts",
+      "upstreamPath": "apps/web/src/timeline/element-utils.ts",
+      "upstreamSha256": "938941c6f5d9520745ed7937decb5a7f2137fd20cc9f0c4478aa11877864bf7b",
+      "localSha256": "d4d27e013138f475bf91d361273345c66aafa08a8614443985a349d63f0ade82",
+      "patches": [
+        "extracted isRetimableElement predicate only",
+        "application aliases -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/track-factory.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/track-factory.ts",
+      "upstreamSha256": "3798f2bf08f5fbd92f9d26d36fe90df4294db8bf6a103bcb847589f5ffc8b563",
+      "localSha256": "d33e5873f08cb8a82af7040a108eecf406dada9921a441faced68c17c78e362f",
+      "patches": [
+        "@/timeline/tracks -> ../tracks",
+        "@/timeline -> ../../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/placement/apply.ts",
+      "upstreamPath": "apps/web/src/timeline/placement/apply.ts",
+      "upstreamSha256": "2a2c05158fbfd5b08228f6b4db244da128bb1a5fb1ab910c869d26199d9dd073",
+      "localSha256": "6843af064750e80f321ef216637962729fcb0fc9d0e90115066298af7dae1c9f",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports",
+        "removed subtype-only casts made unnecessary by the structural compatibility timeline port"
+      ]
+    },
+    {
+      "localPath": "src/timeline/track-element-update.ts",
+      "upstreamPath": "apps/web/src/timeline/track-element-update.ts",
+      "upstreamSha256": "693363680e40281ff88d70b1985fdd32d084e6ebac42168315ce71052f5bb255",
+      "localSha256": "d41d4ba49d2496594f34db585479162c4a4e94544426feef6ca13b83558c51d8",
+      "patches": [
+        "@/timeline -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/tracks.ts",
+      "upstreamPath": "apps/web/src/timeline/tracks.ts",
+      "upstreamSha256": "d0dffda7b9e4ed8fc5647d7cccefddac02b5dc201235692183f0186e20a9fee2",
+      "localSha256": "f4f8da57ef19cb0471e6074e61c4767761a98d1c1f25effee7f24c8f1292de7e",
+      "patches": [
+        "@/timeline -> ../ports/timeline"
+      ]
+    },
+    {
+      "localPath": "src/timeline/update-pipeline.ts",
+      "upstreamPath": "apps/web/src/timeline/update-pipeline.ts",
+      "upstreamSha256": "1364c211c23121acd75e993decbfc57074e59578e2e95fb03352e593907b3a7b",
+      "localSha256": "627a1e7f3f0ef042d52b83ef6aa114b3fdb009c283ba6c991375cd5ff466e9c6",
+      "patches": [
+        "application aliases -> relative extracted modules and compatibility ports"
+      ]
+    },
+    {
+      "localPath": "src/utils/id.ts",
+      "upstreamPath": "apps/web/src/utils/id.ts",
+      "upstreamSha256": "02d1f76af07293255fc752f76e6eafbbdb65190f0b94baf585dfcaa11fa282c8",
+      "localSha256": "a3975abf8eece872cc940ed1cd5636c85ef40ad8f242f15a1d9e5cc79ceb7db9",
+      "patches": [
+        "normalized CRLF to LF; implementation unchanged"
+      ]
+    },
+    {
+      "localPath": "src/utils/math.ts",
+      "upstreamPath": "apps/web/src/utils/math.ts",
+      "upstreamSha256": "164fb1f6ca02daa64b7d4e0eec097389d7764a9e17753592d35b9028b999bbe0",
+      "localSha256": "164fb1f6ca02daa64b7d4e0eec097389d7764a9e17753592d35b9028b999bbe0",
+      "patches": []
+    },
+    {
+      "localPath": "src/services/video-cache/service.ts",
+      "upstreamPath": "apps/web/src/services/video-cache/service.ts",
+      "upstreamSha256": "a8f0375ed19f1c184f51befe6178f2583d5da29ea9a7598fbdd97733747b7e3f",
+      "localSha256": "a8f0375ed19f1c184f51befe6178f2583d5da29ea9a7598fbdd97733747b7e3f",
+      "patches": []
+    },
+    {
+      "localPath": "src/services/renderer/scene-exporter.ts",
+      "upstreamPath": "apps/web/src/services/renderer/scene-exporter.ts",
+      "upstreamSha256": "512487461a98fc37ddae93de326f56712e1940a8b81ac01cd2dff79f4f976ed1",
+      "localSha256": "512487461a98fc37ddae93de326f56712e1940a8b81ac01cd2dff79f4f976ed1",
+      "patches": []
+    }
+  ],
+  "localCompatibilityPorts": [
+    "src/ports/animation-param-path.ts",
+    "src/ports/browser-events.ts",
+    "src/ports/media-time.ts",
+    "src/ports/timeline.ts",
+    "src/ports/editor-core.ts",
+    "src/timeline/placement/command-ports.ts",
+    "src/retime/resize.ts"
+  ]
+}

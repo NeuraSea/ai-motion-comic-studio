@@ -1,0 +1,59 @@
+.paid-aigc-confirmation-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: grid;
+  padding: 24px;
+  place-items: center;
+  background: rgba(4, 6, 9, .78);
+  backdrop-filter: blur(8px);
+}
+
+.paid-aigc-confirmation-dialog {
+  width: min(680px, 100%);
+  overflow: hidden;
+  border: 1px solid #343a43;
+  border-radius: 16px;
+  color: #e9ebef;
+  background: #101317;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .55);
+}
+
+.paid-aigc-confirmation-dialog > header { display: grid; grid-template-columns: auto 1fr auto; gap: 13px; align-items: start; padding: 20px 22px; border-bottom: 1px solid #292e35; background: linear-gradient(120deg, rgba(243, 132, 62, .14), rgba(122, 95, 255, .08)); }
+.paid-aigc-confirmation-dialog > header > span { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 10px; color: #ff9a58; background: rgba(243, 132, 62, .14); }
+.paid-aigc-confirmation-dialog h2 { margin: 3px 0 5px; font-size: 20px; }
+.paid-aigc-confirmation-dialog header small { color: #f39a60; font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.paid-aigc-confirmation-dialog header p { margin: 0; color: #8f96a1; font-size: 12px; line-height: 1.55; }
+.paid-aigc-confirmation-dialog header button { width: 34px; height: 34px; border: 1px solid #343a43; border-radius: 9px; color: #9aa0aa; background: #15191e; }
+.paid-aigc-confirmation-dialog > main { display: grid; gap: 14px; padding: 20px 22px; }
+.paid-aigc-confirmation-provider { display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)); gap: 13px; align-items: center; padding: 14px; border: 1px solid rgba(122, 95, 255, .34); border-radius: 11px; background: rgba(122, 95, 255, .07); }
+.paid-aigc-confirmation-provider > svg { color: #a795ff; }
+.paid-aigc-confirmation-provider div { display: grid; min-width: 0; gap: 3px; }
+.paid-aigc-confirmation-provider small { color: #7f8590; font-size: 10px; }
+.paid-aigc-confirmation-provider strong { overflow: hidden; color: #e0dcff; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.paid-aigc-confirmation-dialog dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; border: 1px solid #2b3037; border-radius: 11px; overflow: hidden; }
+.paid-aigc-confirmation-dialog dl > div { display: grid; gap: 5px; padding: 13px 14px; border-right: 1px solid #2b3037; border-bottom: 1px solid #2b3037; }
+.paid-aigc-confirmation-dialog dl > div:nth-child(2n) { border-right: 0; }
+.paid-aigc-confirmation-dialog dl > div:nth-last-child(-n+2) { border-bottom: 0; }
+.paid-aigc-confirmation-dialog dt { color: #7e848e; font-size: 10px; }
+.paid-aigc-confirmation-dialog dd { display: flex; align-items: center; gap: 5px; margin: 0; color: #d9dce2; font-size: 12px; }
+.paid-aigc-confirmation-binding, .paid-aigc-confirmation-warning, .paid-aigc-confirmation-error { display: flex; gap: 8px; align-items: flex-start; padding: 10px 11px; border-radius: 9px; font-size: 11px; line-height: 1.55; }
+.paid-aigc-confirmation-binding { border: 1px solid rgba(70, 176, 116, .32); color: #8fc9a7; background: rgba(70, 176, 116, .07); }
+.paid-aigc-confirmation-warning { border: 1px solid rgba(231, 166, 63, .38); color: #dfb66e; background: rgba(231, 166, 63, .08); }
+.paid-aigc-confirmation-error { border: 1px solid rgba(225, 76, 67, .38); color: #ef9993; background: rgba(225, 76, 67, .08); }
+.paid-aigc-confirmation-binding svg, .paid-aigc-confirmation-warning svg, .paid-aigc-confirmation-error svg { flex: 0 0 auto; margin-top: 1px; }
+.paid-aigc-confirmation-dialog > footer { display: flex; justify-content: flex-end; gap: 9px; padding: 15px 22px; border-top: 1px solid #292e35; background: #0d1013; }
+.paid-aigc-confirmation-dialog > footer .button { min-height: 38px; }
+.paid-aigc-confirmation-dialog > footer .primary { min-width: 236px; }
+
+@media (max-width: 640px) {
+  .paid-aigc-confirmation-backdrop { padding: 10px; }
+  .paid-aigc-confirmation-provider { grid-template-columns: auto 1fr; }
+  .paid-aigc-confirmation-provider > div { grid-column: 2; }
+  .paid-aigc-confirmation-dialog dl { grid-template-columns: 1fr; }
+  .paid-aigc-confirmation-dialog dl > div { border-right: 0; }
+  .paid-aigc-confirmation-dialog dl > div:nth-last-child(-n+2) { border-bottom: 1px solid #2b3037; }
+  .paid-aigc-confirmation-dialog dl > div:last-child { border-bottom: 0; }
+  .paid-aigc-confirmation-dialog > footer { flex-direction: column-reverse; }
+  .paid-aigc-confirmation-dialog > footer .primary { min-width: 0; }
+}

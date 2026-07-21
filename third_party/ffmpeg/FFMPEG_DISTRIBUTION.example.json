@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "target": {
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "source": {
+    "project": "FFmpeg",
+    "version": "8.1.2",
+    "archiveUrl": "https://ffmpeg.org/releases/ffmpeg-8.1.2.tar.xz",
+    "archiveSha256": "464beb5e7bf0c311e68b45ae2f04e9cc2af88851abb4082231742a74d97b524c",
+    "signatureUrl": "https://ffmpeg.org/releases/ffmpeg-8.1.2.tar.xz.asc",
+    "signingKeyFingerprint": "FCF986EA15E6E293A5644F10B4322F04D67658D8"
+  },
+  "build": {
+    "recipe": {
+      "path": "BUILD.md",
+      "sha256": "REPLACE_WITH_64_LOWERCASE_HEX"
+    }
+  },
+  "license": {
+    "expression": "GPL-2.0-or-later",
+    "noticeFiles": [
+      {
+        "path": "COPYING.GPLv2",
+        "sha256": "REPLACE_WITH_64_LOWERCASE_HEX"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "sha256": "REPLACE_WITH_64_LOWERCASE_HEX"
+      }
+    ],
+    "correspondingSource": {
+      "path": "corresponding-source.tar.xz",
+      "sha256": "REPLACE_WITH_64_LOWERCASE_HEX"
+    }
+  },
+  "binaries": {
+    "ffmpeg": {
+      "sha256": "REPLACE_WITH_64_LOWERCASE_HEX",
+      "versionLine": "ffmpeg version 8.1.2 ...",
+      "configuration": "--enable-gpl --disable-nonfree --enable-libx264 --enable-libass ..."
+    },
+    "ffprobe": {
+      "sha256": "REPLACE_WITH_64_LOWERCASE_HEX",
+      "versionLine": "ffprobe version 8.1.2 ...",
+      "configuration": "--enable-gpl --disable-nonfree --enable-libx264 --enable-libass ..."
+    }
+  },
+  "capabilities": {
+    "encoders": ["aac", "libx264", "png"],
+    "decoders": ["aac", "av1", "gif", "h264", "mjpeg", "mp3", "opus", "pcm_s16le", "png", "vorbis", "vp8", "vp9", "webp"],
+    "filters": ["adelay", "afade", "aformat", "amix", "anullsrc", "apad", "aresample", "asetpts", "ass", "atrim", "blackdetect", "concat", "crop", "fade", "format", "fps", "geq", "null", "pad", "scale", "setsar", "silencedetect", "split", "subtitles", "trim", "volume", "volumedetect", "zoompan"],
+    "demuxers": ["gif", "image2", "matroska", "mov", "mp3", "wav"],
+    "muxers": ["image2", "mp4", "null"]
+  }
+}

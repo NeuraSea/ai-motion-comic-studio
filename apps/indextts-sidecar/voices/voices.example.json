@@ -1,0 +1,11 @@
+{
+  "voices": [
+    {
+      "voice_id": "ali-main",
+      "name": "阿离主声线",
+      "description": "清冷、克制的年轻女性声线",
+      "reference_audio": "ali-main.wav",
+      "tags": ["女声", "青年", "清冷"]
+    }
+  ]
+}

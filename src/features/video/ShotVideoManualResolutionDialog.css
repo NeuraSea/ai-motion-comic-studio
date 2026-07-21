@@ -1,0 +1,70 @@
+.shot-video-resolution-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 175;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 6, 8, .82);
+  backdrop-filter: blur(12px);
+}
+
+.shot-video-resolution-dialog {
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  border: 1px solid #49342c;
+  border-radius: 15px;
+  color: #e5e7eb;
+  background: #111417;
+  box-shadow: 0 26px 90px rgba(0, 0, 0, .58);
+}
+
+.shot-video-resolution-dialog > header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px 17px;
+  border-bottom: 1px solid #302924;
+  background: linear-gradient(110deg, rgba(225, 76, 67, .12), rgba(243, 132, 62, .06), transparent 70%);
+}
+.shot-video-resolution-dialog > header > span { display: grid; width: 36px; height: 36px; flex: 0 0 36px; place-items: center; border-radius: 10px; color: #ff9b82; background: rgba(225, 76, 67, .12); }
+.shot-video-resolution-dialog > header > div { min-width: 0; flex: 1; }
+.shot-video-resolution-dialog > header small { color: #d8896f; font-size: 9px; letter-spacing: .08em; }
+.shot-video-resolution-dialog h2 { margin: 3px 0 0; color: #f4f4f5; font-size: 16px; }
+.shot-video-resolution-dialog > header > button { display: grid; width: 32px; height: 32px; flex: 0 0 32px; place-items: center; border: 1px solid #34383f; border-radius: 8px; color: #9ca1ab; background: #181b1f; }
+.shot-video-resolution-dialog > header > button:disabled { opacity: .45; }
+
+.shot-video-resolution-body { display: grid; gap: 14px; padding: 17px; }
+.shot-video-resolution-warning { margin: 0; padding: 10px 11px; border-left: 2px solid #d75b4f; color: #c8a29a; background: rgba(225, 76, 67, .07); font-size: 10px; line-height: 1.6; }
+.shot-video-resolution-body dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0; overflow: hidden; border: 1px solid #2b2f35; border-radius: 9px; background: #2b2f35; }
+.shot-video-resolution-body dl > div { display: grid; min-width: 0; gap: 4px; padding: 9px 10px; background: #15181c; }
+.shot-video-resolution-body dt { color: #777d87; font-size: 8px; }
+.shot-video-resolution-body dd { overflow: hidden; margin: 0; color: #d2d5db; font: 9px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; text-overflow: ellipsis; white-space: nowrap; }
+
+.shot-video-resolution-check { display: flex; align-items: flex-start; gap: 10px; padding: 11px; border: 1px solid #343139; border-radius: 9px; background: #16181c; cursor: pointer; }
+.shot-video-resolution-check.checked { border-color: rgba(243, 132, 62, .55); background: rgba(243, 132, 62, .07); }
+.shot-video-resolution-check input { margin-top: 2px; accent-color: #f3843e; }
+.shot-video-resolution-check span { display: grid; gap: 4px; }
+.shot-video-resolution-check strong { color: #dadddf; font-size: 10px; }
+.shot-video-resolution-check small { color: #858a94; font-size: 9px; line-height: 1.5; }
+
+.shot-video-resolution-note { display: grid; gap: 6px; }
+.shot-video-resolution-note > span { display: flex; justify-content: space-between; color: #a9adb5; font-size: 9px; }
+.shot-video-resolution-note textarea { width: 100%; resize: vertical; min-height: 84px; padding: 9px 10px; border: 1px solid #34383f; border-radius: 8px; outline: none; color: #d8dbe0; background: #0d0f12; font: 10px/1.55 inherit; }
+.shot-video-resolution-note textarea:focus { border-color: rgba(243, 132, 62, .64); box-shadow: 0 0 0 2px rgba(243, 132, 62, .09); }
+.shot-video-resolution-note > small { color: #6f747d; font-size: 8px; }
+.shot-video-resolution-error { display: flex; align-items: flex-start; gap: 7px; padding: 9px 10px; border-radius: 8px; color: #ff9e97; background: rgba(225, 76, 67, .1); font-size: 9px; line-height: 1.5; }
+.shot-video-resolution-error svg { flex: 0 0 auto; margin-top: 1px; }
+
+.shot-video-resolution-dialog > footer { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 17px 16px; border-top: 1px solid #292d32; background: #0f1215; }
+.shot-video-resolution-dialog > footer .button { min-height: 36px; padding: 0 13px; font-size: 10px; }
+.shot-video-resolution-dialog > footer .button.primary { min-width: 210px; }
+
+@media (max-width: 620px) {
+  .shot-video-resolution-backdrop { align-items: end; padding: 0; }
+  .shot-video-resolution-dialog { width: 100%; max-height: 100dvh; border-radius: 14px 14px 0 0; }
+  .shot-video-resolution-body dl { grid-template-columns: 1fr; }
+  .shot-video-resolution-dialog > footer { align-items: stretch; flex-direction: column-reverse; }
+  .shot-video-resolution-dialog > footer .button.primary { min-width: 0; }
+}
