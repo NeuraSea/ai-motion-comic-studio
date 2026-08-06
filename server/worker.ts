@@ -163,6 +163,12 @@ export interface JobWorkerOptions {
   concurrency?: number
   /** Optional per-resource limits, for example `{ "provider:image": 1 }`. */
   resourceConcurrency?: Readonly<Record<string, number>>
+  /**
+   * Fail jobs assigned to these resource-key prefixes before their handler is
+   * invoked. Used by isolated public demos to prove no external Provider can
+   * execute even when the copied database still contains historical profiles.
+   */
+  blockedResourceKeyPrefixes?: readonly string[]
   onEvent?: (event: JobWorkerEvent) => void
   /** Receives infrastructure errors which cannot be represented as job failure. */
   onError?: (error: unknown, context: JobWorkerErrorContext) => void
@@ -302,6 +308,7 @@ export class JobWorker {
   private readonly backgroundErrors: unknown[] = []
   private readonly concurrency: number
   private readonly resourceConcurrency: Readonly<Record<string, number>>
+  private readonly blockedResourceKeyPrefixes: readonly string[]
   private readonly onEvent?: (event: JobWorkerEvent) => void
   private readonly onError?: (error: unknown, context: JobWorkerErrorContext) => void
   private started = false
@@ -321,6 +328,13 @@ export class JobWorker {
       positiveInteger(value, `resourceConcurrency[${JSON.stringify(key)}]`)
     }
     this.resourceConcurrency = Object.freeze(limits)
+    this.blockedResourceKeyPrefixes = Object.freeze(
+      (options.blockedResourceKeyPrefixes ?? []).map((prefix) => {
+        const normalized = prefix.trim()
+        if (!normalized) throw new Error('blockedResourceKeyPrefixes must not contain empty values')
+        return normalized
+      }),
+    )
     this.onEvent = options.onEvent
     this.onError = options.onError
   }
@@ -559,6 +573,15 @@ export class JobWorker {
         throw new JobExecutionError(
           'JOB_HANDLER_NOT_REGISTERED',
           `没有为任务类型 ${job.type} 注册处理器`,
+          false,
+          'validation',
+        )
+      }
+      const resourceKey = this.resolveResourceKey(job)
+      if (resourceKey && this.blockedResourceKeyPrefixes.some((prefix) => resourceKey.startsWith(prefix))) {
+        throw new JobExecutionError(
+          'RESOURCE_EXECUTION_DISABLED',
+          '当前隔离环境已禁用外部 Provider 执行',
           false,
           'validation',
         )

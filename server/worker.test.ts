@@ -191,6 +191,30 @@ test('executes a registered handler, persists progress/output, and deduplicates 
   assert.ok(events.includes('job.succeeded'))
 })
 
+test('blocked resource prefixes fail before an external provider handler can execute', async () => {
+  const repository = new MemoryJobRepository()
+  let providerCalls = 0
+  const worker = new JobWorker(repository, { blockedResourceKeyPrefixes: ['provider:'] })
+  worker.register('image.generate', async () => {
+    providerCalls += 1
+    return { unsafe: true }
+  }, { resourceKey: () => 'provider:image' })
+
+  await worker.start()
+  const created = await worker.submit({
+    type: 'image.generate',
+    input: {},
+    idempotencyKey: 'demo-provider-block',
+  })
+  await worker.waitForIdle()
+
+  assert.equal(providerCalls, 0)
+  const failed = await repository.get(created.job.id)
+  assert.equal(failed?.status, 'failed')
+  assert.equal(failed?.error?.code, 'RESOURCE_EXECUTION_DISABLED')
+  assert.equal(failed?.error?.retryable, false)
+})
+
 test('defaults to serial execution and supports resource-key limits with wider concurrency', async () => {
   const serialRepository = new MemoryJobRepository()
   let active = 0

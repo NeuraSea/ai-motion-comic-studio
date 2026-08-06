@@ -1828,8 +1828,12 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
       )
     })
   }
+  const demoMode = process.env.MANJU_DEMO_MODE === '1'
+  const demoProviderExecutionAllowed = demoMode
+    && process.env.MANJU_DEMO_ALLOW_PROVIDER_EXECUTION === '1'
   const worker = new JobWorker(jobs, {
     concurrency: 4,
+    blockedResourceKeyPrefixes: demoMode && !demoProviderExecutionAllowed ? ['provider:'] : [],
     resourceConcurrency: {
       'provider:image': 1,
       'provider:text': 1,
@@ -2831,6 +2835,30 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
     }),
   )
   app.use(express.json({ limit: '2mb', strict: true, type: 'application/json' }))
+
+  // Public demos default to fail-closed Provider execution. A deployment may
+  // explicitly enable Provider calls while keeping credential mutation and
+  // account authorization inaccessible through the shared demo login.
+  if (demoMode) {
+    app.use('/api/v1/providers/:providerOperation', (request, _response, next) => {
+      const providerTest = request.method === 'POST'
+        && /^\/api\/v1\/providers\/[^/]+\/test(?:\?|$)/.test(request.originalUrl)
+      const readOnlyProviderRequest = request.method === 'GET' || request.method === 'HEAD'
+      if (demoProviderExecutionAllowed && (providerTest || readOnlyProviderRequest)) {
+        next()
+        return
+      }
+      next(new HttpError(
+        403,
+        demoProviderExecutionAllowed
+          ? 'DEMO_PROVIDER_CONFIGURATION_LOCKED'
+          : 'DEMO_PROVIDER_EXECUTION_DISABLED',
+        demoProviderExecutionAllowed
+          ? '体验环境允许调用已配置 Provider，但禁止通过公网修改凭据或账号授权'
+          : '公开体验环境已禁用 Provider 配置与外部调用',
+      ))
+    })
+  }
 
   mountAssetLockRoutes(app, {
     database,

@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "manju-console-proxy",
+  "main": "worker.js",
+  "compatibility_date": "2026-07-21",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "console.comic.nervafs.xyz",
+      "custom_domain": true
+    }
+  ]
+}

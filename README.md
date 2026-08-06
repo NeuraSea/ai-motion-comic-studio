@@ -90,6 +90,31 @@ npm run server:status
 
 `server:start` 与 `server:ensure` 均为幂等操作；`server:ensure` 会在已记录的本项目进程意外退出后恢复服务，`server:restart` 执行安全重启，`server:stop` 停止服务。管理器将 PID、启动身份和日志写入被 Git 忽略的 `runtime/`，启动后必须通过 `/api/health` 才报告成功。停止前会同时核验 PID 与本项目服务入口；如果 5173 被未知进程占用，只报告为非受管服务或启动失败，不会终止未知进程。SQLite、媒体 Asset 与 Job 均位于持久 `runtime/`，正常重启不会删除或重建它们。
 
+## 双语官网与临时体验环境
+
+`apps/landing` 是独立的 Fumadocs + Next.js 中英双语官网，静态路由为 `/zh/`、`/en/`，体验入口为 `/:locale/experience/`。构建并启动临时 Cloudflare Quick Tunnel：
+
+```bash
+npm run build
+npm run build:landing
+npm run demo:start
+npm run demo:status
+```
+
+`demo:start` 会从当前 `runtime/` 创建隔离的 SQLite 备份与媒体副本，生成一个固定体验账号，并把账号、进程状态和日志写入被 Git 忽略的 `runtime/demo-credentials.json`、`runtime/demo-stack.json` 和 `runtime/demo-*.log`。命令输出会显示临时公网 URL 和体验密码；密码不会写入源码或 Git。停止体验环境：
+
+```bash
+npm run demo:stop
+```
+
+服务重启会复用现有 `runtime/demo/`，不会清空体验环境中的操作记录。只有首次启动、显式运行 `npm run demo:prepare`，或设置 `MANJU_DEMO_REFRESH_RUNTIME=1` 时才会从主运行时重新创建隔离副本。
+
+该环境只用于临时产品体验，工作台写入隔离副本。默认 `demo:start` 与 `demo:start:domain` 仍会在 Worker 资源边界关闭所有 Provider Job，并锁定 Provider 配置接口。需要在受登录保护的体验环境中调用已配置的真实 Provider 时，使用 `npm run demo:start:domain:providers`：该模式允许已启用 Provider 的连接测试、只读目录与生成调用，但继续禁止通过公网修改/删除 Keychain 凭据或发起账号授权。图片、TTS 与视频调用可能产生真实费用，仍受服务端 preflight/confirm 保护。Quick Tunnel 没有 SLA，重启后 URL 会变化，不等同于正式公网发布。
+
+已经配置 Named Tunnel 时，可用 `npm run demo:start:domain` 把官网发布到 `https://comic.nervafs.xyz`，把登录和工作台发布到 `https://console.comic.nervafs.xyz`。本机忽略的 `runtime/manju-comic-tunnel.yml` 只保存 Tunnel ID 与凭据文件路径；Cloudflare Tunnel 凭据不得进入仓库。
+
+由于 `console.comic.nervafs.xyz` 是多级子域，`deploy/console-proxy` 使用 Cloudflare Worker Custom Domain 获取该精确主机名的托管证书，再透传到只供 Worker 使用的一级 Tunnel 入口 `console-origin.nervafs.xyz`。Worker 不持有体验账号、Session secret 或 Provider 凭据。
+
 ## Provider 配置
 
 1. Codex Tools 文本/图片代理默认地址为 `http://127.0.0.1:8787`。
