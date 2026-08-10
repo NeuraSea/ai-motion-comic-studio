@@ -19,7 +19,6 @@
  */
 import { createHash, randomUUID } from 'node:crypto'
 import { mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises'
-import { tmpdir } from 'node:os'
 import { join, resolve as resolvePath } from 'node:path'
 
 import { CodexToolsImageProvider } from './providers/codex-tools.js'
@@ -581,7 +580,10 @@ export function createDigitalHumanPipelineHandler(
 
     // ---- FFmpeg 拼接 + 字幕（免费） -------------------------------------------
     await reportStage('export', 82, '拼接导出')
-    const workDir = await mkdtemp(join(tmpdir(), 'manju-dh-export-'))
+    // 导出工作目录必须落在 MediaStore 的 runtime 目录内：该目录在启动时已通过
+    // 符号链接/越界安全校验。/tmp 在 macOS 上是符号链接，会被渲染器的
+    // UNSAFE_OUTPUT_PATH 检查拒绝。
+    const workDir = await mkdtemp(join(deps.mediaStore.runtimeDirectory, '.dh-export-'))
     try {
       const srtEntries: string[] = []
       let cursor = 0
@@ -621,13 +623,20 @@ export function createDigitalHumanPipelineHandler(
       }
       const renderer = createFfmpegRenderer()
       const tempOutput = join(workDir, 'export.mp4')
-      await renderer.render({
-        timeline,
-        resolution: input.video.resolution === '480p' ? '720p' : input.video.resolution,
-        aspectRatio: input.video.aspectRatio,
-        outputPath: tempOutput,
-        signal,
-      })
+      try {
+        await renderer.render({
+          timeline,
+          resolution: input.video.resolution === '480p' ? '720p' : input.video.resolution,
+          aspectRatio: input.video.aspectRatio,
+          outputPath: tempOutput,
+          signal,
+        })
+      } catch (renderError) {
+        // 透传渲染失败的可诊断信息（FFmpeg stderr 分类、缺失资产等），便于定位
+        const message = renderError instanceof Error ? renderError.message : String(renderError)
+        const code = (renderError as { code?: string })?.code ?? 'EXPORT_FAILED'
+        throw new JobExecutionError(code, `数字人导出失败: ${message}`, true, 'internal')
+      }
       const outputBytes = new Uint8Array(await readFile(tempOutput))
       const exportAsset = await deps.mediaStore.save({
         projectId,

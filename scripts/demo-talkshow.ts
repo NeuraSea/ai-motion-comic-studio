@@ -182,7 +182,8 @@ async function main(): Promise<void> {
       'audio-dir': { type: 'string' },
       aspect: { type: 'string', default: '16:9' },
       resolution: { type: 'string', default: '1080p' },
-      'seedance-model': { type: 'string', default: 'doubao-seedance-2.0' },
+      'seedance-model': { type: 'string', default: 'doubao-seedance-2-0-260128' },
+      'seedance-base-url': { type: 'string', default: 'https://ark.cn-beijing.volces.com/api/v3' },
       'confirm-paid': { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
       'max-lines': { type: 'string' },
@@ -380,12 +381,16 @@ async function main(): Promise<void> {
 
   // ---- Seedance 逐句视频 --------------------------------------------------
   step(`5/7 Seedance 逐句首帧视频（付费，模型 ${values['seedance-model']}）`)
+  const keychain = new MacOSKeychain()
   const seedanceKey = process.env.SEEDANCE_API_KEY
-    ?? await new MacOSKeychain().get({ providerId: 'seedance-video' })
-    ?? await new MacOSKeychain().get({ providerId: 'seedance-video', credentialKind: 'api-key' })
+    // 优先使用已验证可用的 metered revision key（r3），再回到通用槽位。
+    ?? await keychain.get({ providerId: 'seedance-video', credentialKind: 'api-key-r3' })
+    ?? await keychain.get({ providerId: 'seedance-video' })
+    ?? await keychain.get({ providerId: 'seedance-video', credentialKind: 'api-key' })
   if (!seedanceKey) fatal('未找到 Seedance key（SEEDANCE_API_KEY 或 Keychain provider:seedance-video）')
   const seedance = new SeedanceVideoProvider({
     apiKey: seedanceKey,
+    baseUrl: values['seedance-base-url'],
     model: values['seedance-model'],
   })
   info(`模型: ${seedance.model}，分辨率: ${resolution}，比例: ${aspectRatio}`)
