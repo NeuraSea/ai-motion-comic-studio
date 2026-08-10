@@ -1,0 +1,149 @@
+/* 真人数字人工作台（Phase 1 Demo） */
+.dh-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  color: #e8e8ec;
+  font-family: inherit;
+}
+.dh-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.dh-header small { color: #9a9aa5; font-size: 12px; letter-spacing: 0.04em; }
+.dh-header h1 { margin: 4px 0 0; font-size: 26px; font-weight: 650; }
+.dh-back {
+  color: #7aa2ff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 14px;
+  border: 1px solid #2c2c34;
+  border-radius: 8px;
+}
+.dh-back:hover { background: #1a1a20; }
+.dh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.dh-card {
+  background: #141419;
+  border: 1px solid #23232b;
+  border-radius: 14px;
+  padding: 20px;
+}
+.dh-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.dh-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2b3a63;
+  color: #bcd0ff;
+  font-size: 13px;
+  font-weight: 650;
+  flex-shrink: 0;
+}
+.dh-label { display: block; margin: 14px 0 6px; font-size: 13px; color: #b9b9c3; font-weight: 550; }
+.dh-input, .dh-lines {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0e0e12;
+  border: 1px solid #2a2a33;
+  border-radius: 8px;
+  color: #e8e8ec;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.dh-lines { resize: vertical; line-height: 1.6; }
+.dh-input:focus, .dh-lines:focus { outline: none; border-color: #4a6cf7; }
+.dh-hint { display: block; margin-top: 6px; color: #8a8a96; font-size: 12px; line-height: 1.5; }
+.dh-photo {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 240px;
+  border-radius: 10px;
+  border: 1px solid #2a2a33;
+  display: block;
+}
+.dh-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 8px 0; align-items: center; }
+.dh-row label { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #c5c5cf; cursor: pointer; }
+.dh-chip {
+  background: #0e0e12;
+  border: 1px solid #2a2a33;
+  color: #c5c5cf;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.dh-chip.active { background: #243260; border-color: #4a6cf7; color: #cfe0ff; }
+.dh-chip:disabled { opacity: 0.5; cursor: not-allowed; }
+.dh-actions { margin-top: 18px; }
+.dh-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 9px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.dh-btn.primary { background: #4a6cf7; color: #fff; }
+.dh-btn.primary:hover:not(:disabled) { background: #3b5df0; }
+.dh-btn.secondary { background: #23232c; color: #d5d5de; border: 1px solid #30303a; }
+.dh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.dh-preflight {
+  margin-top: 18px;
+  padding: 16px;
+  background: #17130e;
+  border: 1px solid #4a3a1a;
+  border-radius: 10px;
+}
+.dh-preflight p { margin: 0 0 8px; font-size: 14px; }
+.dh-preflight ul { margin: 0 0 12px; padding-left: 20px; font-size: 13px; color: #cfc8b8; }
+.dh-preflight .dh-btn { margin-top: 12px; }
+.dh-result { margin-top: 4px; }
+.dh-error {
+  background: #2a1416;
+  border: 1px solid #5a2428;
+  color: #ffb3b8;
+  padding: 12px 14px;
+  border-radius: 9px;
+  font-size: 14px;
+  margin: 10px 0;
+}
+.dh-progress {
+  height: 8px;
+  background: #20202a;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 12px 0 6px;
+}
+.dh-progress-bar { height: 100%; background: linear-gradient(90deg, #4a6cf7, #6f90ff); transition: width 0.4s; }
+.dh-stages { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-left: 18px; color: #a9a9b4; font-size: 13px; margin: 12px 0; }
+.dh-done { margin-top: 16px; }
+.dh-done p { font-size: 15px; }
+.dh-video {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 12px;
+  border: 1px solid #2a2a33;
+  margin: 12px 0;
+  display: block;
+  background: #000;
+}

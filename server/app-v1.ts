@@ -86,6 +86,12 @@ import {
   ExportRenderService,
 } from './export-render.js'
 import type { FfmpegRenderer } from './ffmpeg-renderer.js'
+import {
+  createDigitalHumanPipelineHandler,
+  DIGITAL_HUMAN_PIPELINE_JOB_TYPE,
+  estimatePaidUnits,
+  validateDigitalHumanInput,
+} from './digital-human-pipeline.js'
 import { MacOSKeychain } from './keychain.js'
 import { jobRetryDisposition } from './job-retry-policy.js'
 import {
@@ -102,7 +108,7 @@ import {
   DoubaoVoiceCatalogError,
   DoubaoVoiceCatalogService,
 } from './doubao-voice-catalog.js'
-import { imageDimensions, MediaStore, MediaStoreError } from './media.js'
+import { detectMediaMime, imageDimensions, MediaStore, MediaStoreError } from './media.js'
 import {
   LinePerformanceContextError,
   resolveLinePerformanceRecommendationContext,
@@ -2569,6 +2575,11 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
     }),
     { resourceKey: () => 'analyzer:ffmpeg' },
   )
+  worker.register(
+    DIGITAL_HUMAN_PIPELINE_JOB_TYPE,
+    createDigitalHumanPipelineHandler({ mediaStore, providerService }),
+    { resourceKey: () => 'provider:video' },
+  )
 
   const coordinator = new PipelineRunCoordinator(
     database,
@@ -2789,6 +2800,11 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
     limit: mediaUploadMaxAudioBytes,
     type: () => true,
   })
+  const digitalHumanPhotoRawBody = express.raw({
+    inflate: false,
+    limit: 30 * 1024 * 1024,
+    type: () => true,
+  })
   app.post(
     '/api/v1/assets/uploads/audio',
     (request, _response, next) => {
@@ -2826,6 +2842,63 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
         bytes: request.body,
         mimeType,
         ...(originalFileName ? { originalFileName } : {}),
+      })
+      eventHub.publish('asset.created', { asset: publicAsset(asset) }, { projectId })
+      response
+        .status(201)
+        .setHeader('Location', `/api/v1/assets/${encodeURIComponent(asset.id)}`)
+        .json({ asset: publicAsset(asset) })
+    }),
+  )
+
+  // 数字人素材：演员照片上传（原始字节，服务器侧校验内容类型与归属）
+  app.post(
+    '/api/v1/digital-human/uploads/photo',
+    digitalHumanPhotoRawBody,
+    asyncRoute(async (request, response) => {
+      const projectId = requestIdentifier(queryString(request.query.projectId), 'projectId')
+      if (!Buffer.isBuffer(request.body) || request.body.byteLength === 0) {
+        throw new HttpError(400, 'INVALID_UPLOAD_BODY', '必须提供原始图片字节')
+      }
+      const bytes = new Uint8Array(request.body)
+      const detected = detectMediaMime(bytes)
+      if (!detected.startsWith('image/')) {
+        throw new HttpError(400, 'INVALID_UPLOAD_BODY', `上传内容不是受支持图片（检测到 ${detected}）`)
+      }
+      const asset = await mediaStore.save({
+        projectId,
+        kind: 'digital-human-photo',
+        bytes,
+        mimeType: detected,
+        source: 'upload',
+      })
+      eventHub.publish('asset.created', { asset: publicAsset(asset) }, { projectId })
+      response
+        .status(201)
+        .setHeader('Location', `/api/v1/assets/${encodeURIComponent(asset.id)}`)
+        .json({ asset: publicAsset(asset) })
+    }),
+  )
+  // 数字人逐句录音上传（上传语音模式）
+  app.post(
+    '/api/v1/digital-human/uploads/audio',
+    audioUploadRawBody,
+    asyncRoute(async (request, response) => {
+      const projectId = requestIdentifier(queryString(request.query.projectId), 'projectId')
+      if (!Buffer.isBuffer(request.body) || request.body.byteLength === 0) {
+        throw new HttpError(400, 'INVALID_UPLOAD_BODY', '必须提供原始音频字节')
+      }
+      const bytes = new Uint8Array(request.body)
+      const detected = detectMediaMime(bytes)
+      if (detected !== 'audio/mpeg' && detected !== 'audio/wav') {
+        throw new HttpError(400, 'INVALID_UPLOAD_BODY', '上传音频必须是 MP3 或 WAV')
+      }
+      const asset = await mediaStore.save({
+        projectId,
+        kind: 'digital-human-audio',
+        bytes,
+        mimeType: detected,
+        source: 'upload',
       })
       eventHub.publish('asset.created', { asset: publicAsset(asset) }, { projectId })
       response
@@ -3048,6 +3121,90 @@ export async function createApplication(options: ApplicationOptions = {}): Promi
       worker: workerStats,
       uptimeSeconds: Math.floor(process.uptime()),
     })
+  }))
+
+  // ---- 数字人管道：预检与提交 -----------------------------------------------
+  // 预检：校验输入 + 估算付费单元，返回必须回填到 paidConfirmation.units 的数量。
+  app.post('/api/v1/digital-human/pipelines/preflight', asyncRoute(async (request, response) => {
+    const body = requireObject(request.body, '数字人预检请求必须是 JSON 对象')
+    let input
+    try {
+      input = validateDigitalHumanInput(body)
+    } catch (error) {
+      if (error instanceof JobExecutionError) {
+        throw new HttpError(400, error.code, error.message)
+      }
+      throw error
+    }
+    // 校验照片资产存在且属于当前项目
+    const photo = database.getMediaAsset(input.photoAssetId)
+    if (!photo) throw new HttpError(404, 'ASSET_NOT_FOUND', '演员照片资产不存在')
+    const units = estimatePaidUnits(input)
+    response.json({
+      units,
+      breakdown: {
+        references: 4,
+        speech: input.speech.mode === 'tts' ? input.lines.length : 0,
+        videos: input.lines.length,
+      },
+      photo: publicAsset(photo),
+    })
+  }))
+
+  // 提交：创建持久管道 Job（幂等），返回 job。
+  app.post('/api/v1/digital-human/pipelines', asyncRoute(async (request, response) => {
+    const body = requireObject(request.body, '数字人管道请求必须是 JSON 对象')
+    let input
+    try {
+      input = validateDigitalHumanInput(body)
+    } catch (error) {
+      if (error instanceof JobExecutionError) {
+        throw new HttpError(400, error.code, error.message)
+      }
+      throw error
+    }
+    const projectId = requestIdentifier(body.projectId, 'projectId')
+    const photo = database.getMediaAsset(input.photoAssetId)
+    if (!photo) throw new HttpError(404, 'ASSET_NOT_FOUND', '演员照片资产不存在')
+    const expectedUnits = estimatePaidUnits(input)
+    if (!input.paidConfirmation) {
+      throw new HttpError(
+        428,
+        'PAID_CONFIRMATION_REQUIRED',
+        `本管道将发起 ${expectedUnits} 次付费 Provider 调用，必须先通过预检并提供 paidConfirmation`,
+      )
+    }
+    if (input.paidConfirmation.units !== expectedUnits) {
+      throw new HttpError(
+        409,
+        'PAID_CONFIRMATION_MISMATCH',
+        `付费确认单元数 ${input.paidConfirmation.units} 与预估 ${expectedUnits} 不一致，请重新预检`,
+      )
+    }
+    const submissionKey = idempotencyKey(request, true)
+    const existing = database.findGenerationJobByIdempotencyKey(projectId, submissionKey)
+    if (existing) {
+      if (existing.type !== DIGITAL_HUMAN_PIPELINE_JOB_TYPE) {
+        throw new HttpError(409, 'IDEMPOTENCY_CONFLICT', 'Idempotency-Key 已用于其他请求')
+      }
+      response.status(200).json({ job: publicJob(existing, database) })
+      return
+    }
+    const result = await withJobAdmission(async () => {
+      if (activeJobCount(database) >= maxQueueDepth) {
+        throw new HttpError(429, 'QUEUE_FULL', '生成队列已满，请稍后重试')
+      }
+      return worker.submit({
+        type: DIGITAL_HUMAN_PIPELINE_JOB_TYPE,
+        input: input as unknown as JsonObject,
+        idempotencyKey: submissionKey,
+        projectId,
+      })
+    })
+    const durable = database.getGenerationJob(result.job.id)
+    if (!durable) throw new Error('Digital human pipeline job disappeared')
+    eventHub.publish('job.created', { eventType: 'job.created', job: publicJob(durable, database) }, { projectId })
+    response.status(result.created ? 202 : 200).json({ job: publicJob(durable, database) })
   }))
 
   app.post('/api/v1/episodes/:episodeId/pipeline-runs/preflight', asyncRoute(async (request, response) => {
