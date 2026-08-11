@@ -15,6 +15,7 @@
     "server",
     "scripts/verify-ffmpeg-distribution.ts",
     "scripts/demo-talkshow.ts",
+    "scripts/extract-talkshow-rhythm.ts",
     "apps/opencut-editor/src/canonical-timeline-codec.ts",
     "apps/opencut-editor/src/render-semantic-plan.ts",
     "apps/opencut-editor/src/timeline-media-policy.ts",
